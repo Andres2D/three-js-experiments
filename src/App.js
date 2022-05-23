@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
+import Box from "./components/Box";
 
-function App() {
+const App = () => {
+  
+  const [length, setLength] = useState(0.2);
+
+  const buttonHandler = () => {
+    setLength(prevValue => prevValue + 0.5);
+  }
+
+  const buttonDecreaseHandler = () => {
+    setLength(prevValue => prevValue - 0.5);
+  }
+
+  const resetHandler = () => {
+    setLength(0.2);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Canvas
+        camera={{fov: 70, near: 0.01, far: 100, position: [0, 0, 2]}}
+        style={{ height: '100vh', backgroundColor: 'transparent' }}>
+          <Box length={length} />
+      </Canvas>  
+      <button onClick={buttonHandler}>increase</button>
+      <button onClick={buttonDecreaseHandler}>decrease</button>
+      <button onClick={resetHandler}>Reset</button>
     </div>
   );
 }
